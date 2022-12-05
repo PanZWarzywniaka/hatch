@@ -231,6 +231,9 @@ public class Lamp {
         }
 
         public void render(GL3 gl) {
+                leftLampRoot.update();
+                rightLampRoot.update();
+
                 leftLampRoot.draw(gl);
                 rightLampRoot.draw(gl);
         }
