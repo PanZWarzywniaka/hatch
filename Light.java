@@ -1,39 +1,65 @@
 import gmaths.*;
 import java.nio.*;
+import java.util.Arrays;
+
 import com.jogamp.common.nio.*;
 import com.jogamp.opengl.*;
 
-public class Light {
+public abstract class Light {
 
-  private Material material;
+  protected Material material;
+  protected boolean on;
   private Vec3 position;
-  private Mat4 model;
   private Shader shader;
   private Camera camera;
-  // private Mat4 perspective;
+  private float attConstant, attLinear, attQuadratic;
 
-  public Light(GL3 gl) {
+  public Light(GL3 gl, Camera c) {
     material = new Material();
     material.setAmbient(1f, 1f, 1f);
     material.setDiffuse(1f, 1f, 1f);
     material.setSpecular(1f, 1f, 1f);
-    position = new Vec3(3f, 2f, 1f);
-    model = new Mat4(1);
+    position = new Vec3(0f, 0f, 0f);
 
+    on = true;
+    attConstant = 1f;
+    attLinear = 0.09f;
+    attQuadratic = 0.032f;
     fillBuffers(gl);
     shader = new Shader(gl, "shaders/vs_light.txt", "shaders/fs_light.txt");
+    camera = c;
   }
 
-  public void setPosition(Vec3 v) {
-    position.x = v.x;
-    position.y = v.y;
-    position.z = v.z;
+  public boolean isOn() {
+    return on;
   }
 
-  public void setPosition(float x, float y, float z) {
-    position.x = x;
-    position.y = y;
-    position.z = z;
+  public void switchLight() {
+    this.on = !this.on;
+  }
+
+  public float getAttConstant() {
+    return attConstant;
+  }
+
+  public void setAttConstant(float att_constant) {
+    this.attConstant = att_constant;
+  }
+
+  public float getAttLinear() {
+    return attLinear;
+  }
+
+  public void setAttLinear(float att_linear) {
+    this.attLinear = att_linear;
+  }
+
+  public float getAttQuadratic() {
+    return attQuadratic;
+  }
+
+  public void setAttQuadratic(float att_quadratic) {
+    this.attQuadratic = att_quadratic;
   }
 
   public Vec3 getPosition() {
@@ -48,25 +74,26 @@ public class Light {
     return material;
   }
 
-  public void setCamera(Camera camera) {
-    this.camera = camera;
+  private void updatePosition(Mat4 modelMatrix) {
+    float[] values = modelMatrix.toFloatArrayForGLSL();
+    position.x = values[12];
+    position.y = values[13];
+    position.z = values[14];
+
   }
 
-  /*
-   * public void setPerspective(Mat4 perspective) {
-   * this.perspective = perspective;
-   * }
-   */
+  public void render(GL3 gl, Mat4 modelMatrix) {
+    System.out.println("Light model matrix\n" + modelMatrix.toString());
 
-  public void render(GL3 gl) { // , Mat4 perspective, Mat4 view) {
-    Mat4 model = new Mat4(1);
-    model = Mat4.multiply(Mat4Transform.scale(0.3f, 0.3f, 0.3f), model);
-    model = Mat4.multiply(Mat4Transform.translate(position), model);
+    updatePosition(modelMatrix);
 
-    Mat4 mvpMatrix = Mat4.multiply(camera.getPerspectiveMatrix(), Mat4.multiply(camera.getViewMatrix(), model));
-
+    if (!on) {
+      return;
+    }
+    Mat4 mvpMatrix = Mat4.multiply(camera.getPerspectiveMatrix(), Mat4.multiply(camera.getViewMatrix(), modelMatrix));
     shader.use(gl);
     shader.setFloatArray(gl, "mvpMatrix", mvpMatrix.toFloatArrayForGLSL());
+    shader.setVec3(gl, "aColor", material.getAmbient());
 
     gl.glBindVertexArray(vertexArrayId[0]);
 

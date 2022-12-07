@@ -7,7 +7,7 @@ import com.jogamp.opengl.util.*;
 import com.jogamp.opengl.util.awt.*;
 import com.jogamp.opengl.util.glsl.*;
 import com.jogamp.opengl.util.texture.*;
-
+import java.util.ArrayList;
 import dataclasses.Cube;
 import dataclasses.Sphere;
 import dataclasses.TwoTriangles;
@@ -15,7 +15,7 @@ import dataclasses.TwoTriangles;
 public class Table {
   private SGNode tableRoot;
   private Camera camera;
-  private Light light;
+  private ArrayList<Light> lights;
   private double startTime;
   private Model cube, egg;
   private Texture wood_tex;
@@ -35,9 +35,9 @@ public class Table {
   final float EGG_SCALE_Z = EGG_SCALE_X;
   final float EGG_SCALE_Y = 3f;
 
-  public Table(GL3 gl, Camera c, Light l) {
+  public Table(GL3 gl, Camera c, ArrayList<Light> l) {
     camera = c;
-    light = l;
+    lights = l;
     startTime = System.currentTimeMillis() / 1000.0;
 
     loadTextures(gl);
@@ -53,23 +53,23 @@ public class Table {
   private void makeCube(GL3 gl) {
 
     Mesh mesh = new Mesh(gl, Cube.vertices.clone(), Cube.indices.clone());
-    Shader shader = new Shader(gl, "shaders/vs_cube_04.txt", "shaders/fs_cube_04.txt");
+    Shader shader = new Shader(gl, "shaders/vs_default.txt", "shaders/fs_cube_04.txt");
     Material material = new Material(new Vec3(0.2f, 0.2f, 0.2f), new Vec3(0.2f, 0.2f, 0.2f),
         new Vec3(0.1f, 0.1f, 0.1f),
         2.0f);
     Mat4 modelMatrix = Mat4.multiply(Mat4Transform.scale(1, 1, 1), Mat4Transform.translate(0, 0.5f, 0));
-    cube = new Model(gl, camera, light, shader, material, modelMatrix, mesh, wood_tex);
+    cube = new Model(gl, camera, lights, shader, material, modelMatrix, mesh, wood_tex);
 
   }
 
   private void makeEgg(GL3 gl) {
     Mesh mesh = new Mesh(gl, Sphere.vertices.clone(), Sphere.indices.clone());
-    Shader shader = new Shader(gl, "shaders/vs_cube_04.txt", "shaders/fs_cube_04.txt");
+    Shader shader = new Shader(gl, "shaders/vs_default.txt", "shaders/fs_cube_04.txt");
     Material material = new Material(new Vec3(1.0f, 0.5f, 0.31f), new Vec3(1.0f, 0.5f, 0.31f),
         new Vec3(0.5f, 0.5f, 0.5f),
         32.0f);
     Mat4 modelMatrix = Mat4.multiply(Mat4Transform.scale(1, 1, 1), Mat4Transform.translate(0, 0.5f, 0));
-    egg = new Model(gl, camera, light, shader, material, modelMatrix, mesh, egg_tex, egg_spec_tex);
+    egg = new Model(gl, camera, lights, shader, material, modelMatrix, mesh, egg_tex, egg_spec_tex);
 
   }
 

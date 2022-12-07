@@ -7,6 +7,7 @@ import com.jogamp.opengl.util.*;
 import com.jogamp.opengl.util.awt.*;
 import com.jogamp.opengl.util.glsl.*;
 import com.jogamp.opengl.util.texture.*;
+import java.util.ArrayList;
 
 import dataclasses.Cube;
 import dataclasses.TwoTriangles;
@@ -15,7 +16,7 @@ public class Room {
 
   private Model[] walls;
   private Camera camera;
-  private Light light;
+  private ArrayList<Light> lights;
   private float size = 16f;
   private double startTime;
   private Texture floor_tex;
@@ -26,9 +27,9 @@ public class Room {
   private Material wall_mat, window_mat;
   private Shader wallShader, windowShader, skyboxShader;
 
-  public Room(GL3 gl, Camera c, Light l) {
+  public Room(GL3 gl, Camera c, ArrayList<Light> l) {
     camera = c;
-    light = l;
+    lights = l;
     startTime = System.currentTimeMillis() / 1000.0;
     System.out.println(startTime);
     basecolor = new Vec3(0.5f, 0.5f, 0.5f); // grey
@@ -37,8 +38,8 @@ public class Room {
     Vec3 base_win_color = Vec3.multiply(basecolor, 0.1f);
     window_mat = new Material(base_win_color, base_win_color, new Vec3(0.3f, 0.3f, 0.3f), 32f);
 
-    wallShader = new Shader(gl, "shaders/vs_tt_05.txt", "shaders/fs_tt_05.txt");
-    windowShader = new Shader(gl, "shaders/vs_tt_05.txt", "shaders/fs_window.txt");
+    wallShader = new Shader(gl, "shaders/vs_default.txt", "shaders/fs_multiple_casters.txt");
+    windowShader = new Shader(gl, "shaders/vs_default.txt", "shaders/fs_window.txt");
     skyboxShader = new Shader(gl, "shaders/vs_skybox.txt", "shaders/fs_skybox.txt");
     loadTextures(gl);
     makeAllWalls(gl);
@@ -68,7 +69,7 @@ public class Room {
     // create floor
     Mesh mesh = new Mesh(gl, TwoTriangles.vertices.clone(), TwoTriangles.indices.clone());
 
-    Model model = new Model(gl, camera, light, shdr, mat, modelMatrix, mesh, tex1, tex2);
+    Model model = new Model(gl, camera, lights, shdr, mat, modelMatrix, mesh, tex1, tex2);
     return model;
   }
 

@@ -8,9 +8,6 @@ import com.jogamp.opengl.util.awt.*;
 import com.jogamp.opengl.util.glsl.*;
 import com.jogamp.opengl.util.texture.*;
 
-import dataclasses.Cube;
-import dataclasses.TwoTriangles;
-
 public class HatchGLEventListener implements GLEventListener {
 
   private static final boolean DISPLAY_SHADERS = false;
@@ -46,7 +43,6 @@ public class HatchGLEventListener implements GLEventListener {
     gl.glEnable(GL.GL_CULL_FACE); // default is 'not enabled' so needs to be enabled
     gl.glCullFace(GL.GL_BACK); // default is 'back', assuming CCW
     initialise(gl);
-    startTime = getSeconds();
   }
 
   /* Called to indicate the drawing surface has been moved and/or resized */
@@ -66,10 +62,7 @@ public class HatchGLEventListener implements GLEventListener {
   /* Clean up memory */
   public void dispose(GLAutoDrawable drawable) {
     GL3 gl = drawable.getGL().getGL3();
-    room.dispose(gl);
-    table.dispose(gl);
-    light.dispose(gl);
-    lamp.dispose(gl);
+    scene.dispose(gl);
   }
 
   // ***************************************************
@@ -79,50 +72,18 @@ public class HatchGLEventListener implements GLEventListener {
    * This will be added to in later examples.
    */
 
-  private Room room;
-  private Light light;
-  private Table table;
-  private Lamp lamp;
+  private Scene scene;
 
   public void initialise(GL3 gl) {
+    scene = new Scene(gl, camera);
 
-    light = new Light(gl);
-    light.setCamera(camera);
-    room = new Room(gl, camera, light);
-    table = new Table(gl, camera, light);
-    lamp = new Lamp(gl, camera, light);
   }
 
   public void render(GL3 gl) {
     gl.glClear(GL.GL_COLOR_BUFFER_BIT | GL.GL_DEPTH_BUFFER_BIT);
 
-    light.setPosition(getLightPosition()); // changing light position each frame
-    light.render(gl);
+    scene.render(gl);
 
-    room.render(gl);
-    table.render(gl);
-    lamp.render(gl);
-  }
-
-  // The light's position is continually being changed, so needs to be calculated
-  // for each frame.
-  private Vec3 getLightPosition() {
-    double elapsedTime = getSeconds() - startTime;
-    float x = 5.0f * (float) (Math.sin(Math.toRadians(elapsedTime * 50)));
-    float y = 3.4f;
-    float z = 5.0f * (float) (Math.cos(Math.toRadians(elapsedTime * 50)));
-    return new Vec3(x, y, z);
-  }
-
-  // ***************************************************
-  /*
-   * TIME
-   */
-
-  private double startTime;
-
-  public double getSeconds() {
-    return System.currentTimeMillis() / 1000.0;
   }
 
 }
