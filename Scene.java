@@ -21,12 +21,30 @@ public class Scene {
         private Model plasticCubeModel, woodenSphereModel, woodenCubeModel, alienEggModel, lightBulbModel;
         Room room;
 
+        private TransformNode leftLampYawRotate, leftLampLowerArmRotate, leftLampUpperArmRotate, leftLampHeadRotate;
+        // private float leftLampYaw, leftLampLowerArmPitch, leftLampUpperArmPitch,
+        // leftLampHeadPitch;
+
+        private TransformNode rightLampYawRotate, rightLampLowerArmRotate, rightLampUpperArmRotate, rightLampHeadRotate;
+        // private float rightLampYaw, rightLampLowerArmPitch, rightLampUpperArmPitch,
+        // rightLampHeadPitch;
+
         public Scene(GL3 gl, Camera c) {
                 camera = c;
                 shader = new Shader(gl, "shaders/vs_default.txt", "shaders/fs_multiple_casters.txt");
                 startTime = System.currentTimeMillis() / 1000.0;
 
                 lights = new ArrayList<Light>();
+
+                leftLampYawRotate = new TransformNode("leftLampYawRotate");
+                leftLampLowerArmRotate = new TransformNode("leftLampLowerArmRotate");
+                leftLampUpperArmRotate = new TransformNode("leftLampUpperArmRotate");
+                leftLampHeadRotate = new TransformNode("leftLampHeadRotate");
+
+                rightLampYawRotate = new TransformNode("rightLampYawRotate");
+                rightLampLowerArmRotate = new TransformNode("rightLampLowerArmRotate");
+                rightLampUpperArmRotate = new TransformNode("rightLampUpperArmRotate");
+                rightLampHeadRotate = new TransformNode("rightLampHeadRotate");
 
                 initialise(gl);
         }
@@ -36,6 +54,8 @@ public class Scene {
                 makeMeshes(gl);
                 makeModels(gl);
 
+                leftLampPosition1();
+                rightLampPosition1();
                 // crate nodes
                 root = new NameNode("The Scene root");
                 root.addChild(makePointLights(gl));
@@ -126,6 +146,96 @@ public class Scene {
 
         }
 
+        public void leftLampPosition1() {
+                float leftLampYaw = 150f;
+                leftLampYawRotate.setTransform(Mat4Transform.rotateAroundY(leftLampYaw));
+
+                float leftLampLowerArmPitch = -20f;
+                leftLampLowerArmRotate.setTransform(Mat4Transform.rotateAroundZ(leftLampLowerArmPitch));
+
+                float leftLampUpperArmPitch = 40f;
+                leftLampUpperArmRotate.setTransform(Mat4Transform.rotateAroundZ(leftLampUpperArmPitch));
+
+                float leftLampHeadPitch = 20f;
+                leftLampHeadRotate.setTransform(Mat4Transform.rotateAroundZ(leftLampHeadPitch));
+                System.out.println("Left lamp in position 1");
+        }
+
+        public void rightLampPosition1() {
+                float rightLampYaw = 30f;
+                rightLampYawRotate.setTransform(Mat4Transform.rotateAroundY(rightLampYaw));
+
+                float rightLampLowerArmPitch = -20f;
+                rightLampLowerArmRotate.setTransform(Mat4Transform.rotateAroundZ(rightLampLowerArmPitch));
+
+                float rightLampUpperArmPitch = 40f;
+                rightLampUpperArmRotate.setTransform(Mat4Transform.rotateAroundZ(rightLampUpperArmPitch));
+
+                float rightLampHeadPitch = 20f;
+                rightLampHeadRotate.setTransform(Mat4Transform.rotateAroundZ(rightLampHeadPitch));
+                System.out.println("Right lamp in position 1");
+        }
+
+        public void leftLampPosition2() {
+                float leftLampYaw = 90f;
+                leftLampYawRotate.setTransform(Mat4Transform.rotateAroundY(leftLampYaw));
+
+                float leftLampLowerArmPitch = 70f;
+                leftLampLowerArmRotate.setTransform(Mat4Transform.rotateAroundZ(leftLampLowerArmPitch));
+
+                float leftLampUpperArmPitch = -140f;
+                leftLampUpperArmRotate.setTransform(Mat4Transform.rotateAroundZ(leftLampUpperArmPitch));
+
+                float leftLampHeadPitch = 0f;
+                leftLampHeadRotate.setTransform(Mat4Transform.rotateAroundZ(leftLampHeadPitch));
+                System.out.println("Left lamp in position 2");
+        }
+
+        public void rightLampPosition2() {
+                float rightLampYaw = 90f;
+                rightLampYawRotate.setTransform(Mat4Transform.rotateAroundY(rightLampYaw));
+
+                float rightLampLowerArmPitch = -70f;
+                rightLampLowerArmRotate.setTransform(Mat4Transform.rotateAroundZ(rightLampLowerArmPitch));
+
+                float rightLampUpperArmPitch = 140f;
+                rightLampUpperArmRotate.setTransform(Mat4Transform.rotateAroundZ(rightLampUpperArmPitch));
+
+                float rightLampHeadPitch = 0f;
+                rightLampHeadRotate.setTransform(Mat4Transform.rotateAroundZ(rightLampHeadPitch));
+                System.out.println("Right lamp in position 2");
+        }
+
+        public void leftLampPosition3() {
+                float leftLampYaw = 20f;
+                leftLampYawRotate.setTransform(Mat4Transform.rotateAroundY(leftLampYaw));
+
+                float leftLampLowerArmPitch = 32f;
+                leftLampLowerArmRotate.setTransform(Mat4Transform.rotateAroundZ(leftLampLowerArmPitch));
+
+                float leftLampUpperArmPitch = -60f;
+                leftLampUpperArmRotate.setTransform(Mat4Transform.rotateAroundZ(leftLampUpperArmPitch));
+
+                float leftLampHeadPitch = -50f;
+                leftLampHeadRotate.setTransform(Mat4Transform.rotateAroundZ(leftLampHeadPitch));
+                System.out.println("Left lamp in position 3");
+        }
+
+        public void rightLampPosition3() {
+                float rightLampYaw = 20f;
+                rightLampYawRotate.setTransform(Mat4Transform.rotateAroundY(rightLampYaw));
+
+                float rightLampLowerArmPitch = -32f;
+                rightLampLowerArmRotate.setTransform(Mat4Transform.rotateAroundZ(rightLampLowerArmPitch));
+
+                float rightLampUpperArmPitch = 60f;
+                rightLampUpperArmRotate.setTransform(Mat4Transform.rotateAroundZ(rightLampUpperArmPitch));
+
+                float rightLampHeadPitch = -50f;
+                rightLampHeadRotate.setTransform(Mat4Transform.rotateAroundZ(rightLampHeadPitch));
+                System.out.println("Right lamp in position 3");
+        }
+
         // Scene graphs
         private SGNode makePointLights(GL3 gl) {
 
@@ -133,7 +243,7 @@ public class Scene {
 
                 NameNode rootPointLights = new NameNode("Point lights");
 
-                TransformNode toCelling = new TransformNode("to celling transform", Mat4Transform.translate(0, 10, 5));
+                TransformNode toCelling = new TransformNode("to celling transform", Mat4Transform.translate(0, 10, 10));
 
                 float x_offset = 5f;
                 NameNode leftLightBranch = new NameNode("left light");
@@ -175,23 +285,18 @@ public class Scene {
                 final Vec3 BASE_SCALE = new Vec3(3f, 0.5f, 3f);
 
                 // rotate angle //TODO change name
-                float rotateAllY = 30f;
 
                 // lower arm
                 final Vec3 LOWER_ARM_SCALE = new Vec3(1f, 5f, 1f);
-
-                float rotateLowerAngle = -20f;
 
                 // arm connector
                 final Vec3 JOINT_SCALE = new Vec3(1f, 1f, 1f);
 
                 // upper arm
                 final Vec3 UPPER_ARM_SCALE = new Vec3(1f, 5f, 1f);
-                float rotateUpperAngle = 40f;
 
                 // head
                 final Vec3 HEAD_SCALE = new Vec3(2f, 1f, 1f);
-                float headAngle = 20f;
 
                 // light bulb
                 final Vec3 LIGHT_BULB_SCALE = new Vec3(0.25f, HEAD_SCALE.y * 0.8f, HEAD_SCALE.z * 0.8f);
@@ -210,16 +315,21 @@ public class Scene {
                 ModelNode lampBaseShape = new ModelNode("lampBase(Cube)", plasticCubeModel);
 
                 // rotate all
-                float rotateAllY_angle = right ? rotateAllY : 180 - rotateAllY;
-                TransformNode rotateLamp = new TransformNode("rotateLamp",
-                                Mat4Transform.rotateAroundY(rotateAllY_angle));
+                // float rotateAllY_angle = right ? rotateAllY : 180 - rotateAllY;
+                // TransformNode rotateLamp = new TransformNode("rotateLamp",
+                // Mat4Transform.rotateAroundY(rotateAllY_angle));
+                TransformNode rotateLamp = right ? rightLampYawRotate : leftLampYawRotate;
 
                 NameNode lowerArm = new NameNode("lower arm");
                 TransformNode lowerArmPosTransform = new TransformNode("lowerArmPosTransform",
                                 Mat4Transform.translate(0, 0, 0)); // lower arm is anchored in base not on top of it
 
-                TransformNode rotateLower = new TransformNode("rotateAroundZ(" + rotateLowerAngle + ")",
-                                Mat4Transform.rotateAroundZ(rotateLowerAngle));
+                // TransformNode rotateLower = new TransformNode("rotateAroundZ(" +
+                // rotateLowerAngle + ")",
+                // Mat4Transform.rotateAroundZ(rotateLowerAngle));
+
+                TransformNode rotateLower = right ? rightLampLowerArmRotate : leftLampLowerArmRotate;
+
                 m = Mat4Transform.scale(LOWER_ARM_SCALE);
                 m = Mat4.multiply(m, Mat4Transform.translate(0, 0.5f, 0));
                 TransformNode lowerArmTransform = new TransformNode("lowerArmTransform", m);
@@ -236,8 +346,11 @@ public class Scene {
                 ModelNode armConnectorShape = new ModelNode("armConnectorShape(Sphere)", woodenSphereModel);
 
                 NameNode upperArm = new NameNode("Upper Arm");
-                TransformNode rotateUpper = new TransformNode("rotateAroundZ(" + rotateUpperAngle + ")",
-                                Mat4Transform.rotateAroundZ(rotateUpperAngle));
+
+                TransformNode rotateUpper = right ? rightLampUpperArmRotate : leftLampUpperArmRotate;
+                // TransformNode rotateUpper = new TransformNode("rotateAroundZ(" +
+                // rotateUpperAngle + ")",
+                // Mat4Transform.rotateAroundZ(rotateUpperAngle));
 
                 m = Mat4Transform.scale(UPPER_ARM_SCALE);
                 m = Mat4.multiply(m, Mat4Transform.translate(0, 0.5f, 0));
@@ -249,8 +362,10 @@ public class Scene {
 
                 NameNode head = new NameNode("head");
 
-                TransformNode rotateHead = new TransformNode("rotateAroundZ(" + headAngle + ")",
-                                Mat4Transform.rotateAroundZ(headAngle));
+                TransformNode rotateHead = right ? rightLampHeadRotate : leftLampHeadRotate;
+                // TransformNode rotateHead = new TransformNode("rotateAroundZ(" + headAngle +
+                // ")",
+                // Mat4Transform.rotateAroundZ(headAngle));
 
                 m = Mat4Transform.scale(HEAD_SCALE);
                 m = Mat4.multiply(m, Mat4Transform.translate(0, 0f, 0));
@@ -266,9 +381,10 @@ public class Scene {
                 TransformNode lightBulbTransform = new TransformNode("lightBulbTransform", m);
 
                 SpotLight lightBulb = new SpotLight(gl, camera);
-                Vec3 spotLightDirection = new Vec3(0, -1, 0); // TODO: it should get direction from spot light
-                spotLightDirection.x = right ? -1 : 1;
-                lightBulb.setDirection(spotLightDirection);
+                // Vec3 spotLightDirection = new Vec3(0, -1, 0); // TODO: it should get
+                // direction from spot light
+                // spotLightDirection.x = right ? -1 : 1;
+                // lightBulb.setDirection(spotLightDirection);
                 lights.add(lightBulb);
                 LightNode lighBulbNode = new LightNode(name + " light bulb", lightBulb);
 
@@ -281,6 +397,7 @@ public class Scene {
 
                 lampBase.addChild(rotateLamp);
                 rotateLamp.addChild(lowerArm);
+
                 lowerArm.addChild(lowerArmPosTransform);
                 lowerArmPosTransform.addChild(rotateLower);
                 rotateLower.addChild(lowerArmTransform);
@@ -419,5 +536,9 @@ public class Scene {
                 woodenCubeModel.dispose(gl);
                 lightBulbModel.dispose(gl);
                 alienEggModel.dispose(gl);
+        }
+
+        public void toggleLight(int i) {
+                lights.get(i).switchLight();
         }
 }

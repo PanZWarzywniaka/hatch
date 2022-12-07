@@ -7,6 +7,6 @@ public class PointLight extends Light {
 
   public PointLight(GL3 gl, Camera c) {
     super(gl, c);
-    on = false;
+    // on = false;
   }
 }

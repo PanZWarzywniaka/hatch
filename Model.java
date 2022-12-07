@@ -59,7 +59,7 @@ public class Model {
     shader.setFloatArray(gl, "mvpMatrix", mvpMatrix.toFloatArrayForGLSL());
 
     shader.setVec3(gl, "viewPos", camera.getPosition());
-    System.out.println(lights.size());
+    // System.out.println(lights.size());
     // TODO add transparency to model
     for (int i = 0; i < lights.size(); i++) {
 
@@ -73,7 +73,7 @@ public class Model {
       } else {
         target = String.format("pointLights[%d].", i);
       }
-      System.out.println(light.getPosition());
+      // System.out.println(light.getPosition());
       shader.setVec3(gl, target + "position", light.getPosition());
 
       Material m = new Material(new Vec3(), new Vec3(), new Vec3(), 0);

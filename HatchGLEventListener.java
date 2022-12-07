@@ -83,7 +83,34 @@ public class HatchGLEventListener implements GLEventListener {
     gl.glClear(GL.GL_COLOR_BUFFER_BIT | GL.GL_DEPTH_BUFFER_BIT);
 
     scene.render(gl);
+  }
 
+  public void toggleLight(int i) {
+    scene.toggleLight(i);
+  }
+
+  public void leftLampPosition1() {
+    scene.leftLampPosition1();
+  }
+
+  public void leftLampPosition2() {
+    scene.leftLampPosition2();
+  }
+
+  public void leftLampPosition3() {
+    scene.leftLampPosition3();
+  }
+
+  public void rightLampPosition1() {
+    scene.rightLampPosition1();
+  }
+
+  public void rightLampPosition2() {
+    scene.rightLampPosition2();
+  }
+
+  public void rightLampPosition3() {
+    scene.rightLampPosition3();
   }
 
 }

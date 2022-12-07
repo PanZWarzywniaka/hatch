@@ -1,17 +1,24 @@
 import java.awt.*;
 import java.awt.event.*;
+
+import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
+import javax.swing.JPanel;
+
 import com.jogamp.opengl.*;
 import com.jogamp.opengl.awt.GLCanvas;
 import com.jogamp.opengl.util.FPSAnimator;
 
-public class Hatch extends JFrame {
+public class Hatch extends JFrame implements ActionListener {
 
   private static final int WIDTH = 1024;
   private static final int HEIGHT = 768;
   private static final Dimension dimension = new Dimension(WIDTH, HEIGHT);
   private GLCanvas canvas;
-  private GLEventListener glEventListener;
+  private HatchGLEventListener glEventListener;
   private final FPSAnimator animator;
 
   public static void main(String[] args) {
@@ -25,6 +32,7 @@ public class Hatch extends JFrame {
   public Hatch(String textForTitleBar) {
     super(textForTitleBar);
     setUpCanvas();
+    setUpButtons();
     getContentPane().add(canvas, BorderLayout.CENTER);
     addWindowListener(new windowHandler());
     animator = new FPSAnimator(canvas, 60);
@@ -40,6 +48,90 @@ public class Hatch extends JFrame {
     canvas.addGLEventListener(glEventListener);
     canvas.addMouseMotionListener(new MyMouseInput(camera));
     canvas.addKeyListener(new MyKeyboardInput(camera));
+  }
+
+  private void setUpButtons() {
+
+    JMenuBar menuBar = new JMenuBar();
+    this.setJMenuBar(menuBar);
+    JMenu fileMenu = new JMenu("File");
+    JMenuItem quitItem = new JMenuItem("Quit");
+    quitItem.addActionListener(this);
+    fileMenu.add(quitItem);
+    menuBar.add(fileMenu);
+
+    JPanel panel = new JPanel();
+
+    panel.setLayout(new GridLayout(2, 1));
+
+    JButton b = new JButton("First point light");
+    b.addActionListener(this);
+    panel.add(b);
+    b = new JButton("Second point light");
+    b.addActionListener(this);
+    panel.add(b);
+    b = new JButton("First spot light");
+    b.addActionListener(this);
+    panel.add(b);
+    b = new JButton("Second spot light");
+    b.addActionListener(this);
+    panel.add(b);
+
+    b = new JButton("Toggle animation");
+    b.addActionListener(this);
+    panel.add(b);
+
+    b = new JButton("Quit");
+    b.addActionListener(this);
+    panel.add(b);
+
+    b = new JButton("Left Lamp Position 1");
+    b.addActionListener(this);
+    panel.add(b);
+    b = new JButton("Left Lamp Position 2");
+    b.addActionListener(this);
+    panel.add(b);
+    b = new JButton("Left Lamp Position 3");
+    b.addActionListener(this);
+    panel.add(b);
+    b = new JButton("Right Lamp Position 1");
+    b.addActionListener(this);
+    panel.add(b);
+    b = new JButton("Right Lamp Position 2");
+    b.addActionListener(this);
+    panel.add(b);
+    b = new JButton("Right Lamp Position 3");
+    b.addActionListener(this);
+    panel.add(b);
+
+    this.add(panel, BorderLayout.SOUTH);
+  }
+
+  public void actionPerformed(ActionEvent e) {
+    if (e.getActionCommand().equalsIgnoreCase("First point light")) {
+      glEventListener.toggleLight(1);
+    } else if (e.getActionCommand().equalsIgnoreCase("Second point light")) {
+      glEventListener.toggleLight(0);
+    } else if (e.getActionCommand().equalsIgnoreCase("First spot light")) {
+      glEventListener.toggleLight(2);
+    } else if (e.getActionCommand().equalsIgnoreCase("Second spot light")) {
+      glEventListener.toggleLight(3);
+    } else if (e.getActionCommand().equalsIgnoreCase("quit")) {
+      System.exit(0);
+    } else if (e.getActionCommand().equalsIgnoreCase("Left Lamp Position 1")) {
+      glEventListener.leftLampPosition1();
+    } else if (e.getActionCommand().equalsIgnoreCase("Left Lamp Position 2")) {
+      glEventListener.leftLampPosition2();
+    } else if (e.getActionCommand().equalsIgnoreCase("Left Lamp Position 3")) {
+      glEventListener.leftLampPosition3();
+    } else if (e.getActionCommand().equalsIgnoreCase("Right Lamp Position 1")) {
+      glEventListener.rightLampPosition1();
+    } else if (e.getActionCommand().equalsIgnoreCase("Right Lamp Position 2")) {
+      glEventListener.rightLampPosition2();
+    } else if (e.getActionCommand().equalsIgnoreCase("Right Lamp Position 3")) {
+      glEventListener.rightLampPosition3();
+    }
+
   }
 
   private class windowHandler extends WindowAdapter {

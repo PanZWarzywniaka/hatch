@@ -5,6 +5,11 @@ public class TransformNode extends SGNode {
 
   private Mat4 transform;
 
+  public TransformNode(String name) {
+    super(name);
+    transform = new Mat4();
+  }
+
   public TransformNode(String name, Mat4 t) {
     super(name);
     transform = new Mat4(t);

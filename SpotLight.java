@@ -12,16 +12,29 @@ public class SpotLight extends Light {
 
   public SpotLight(GL3 gl, Camera c) {
     super(gl, c);
-    material.setAmbient(1f, 1f, 0.5f);
-    material.setDiffuse(1f, 1f, 0.5f);
-    material.setSpecular(1f, 1f, 0.5f);
-    direction = new Vec3(1, -1, 0); // face right by default
-    cutOff = 0.91f;// 12.5f;
-    outerCutOff = 0.82f; // 17.5f;
+    Vec3 lightColour = new Vec3(1f, 1f, 0.5f); // war yellow ish light
+    material.setAmbient(lightColour);
+    material.setDiffuse(lightColour);
+    material.setSpecular(lightColour);
+    direction = new Vec3(1, 0, 0); // face right by default
+    cutOff = 0.91f;
+    outerCutOff = 0.82f;
+  }
+
+  private void updateDirection(Mat4 modelMatrix) { // direction of the spotlight where the head is pointing to
+    float[] values = modelMatrix.toFloatArrayForGLSL();
+    direction.x = -values[0];
+    direction.y = -values[1];
+    direction.z = -values[2];
   }
 
   public void setDirection(Vec3 direction) {
     this.direction = direction;
+  }
+
+  public void render(GL3 gl, Mat4 modelMatrix) {
+    updateDirection(modelMatrix);
+    super.render(gl, modelMatrix);
   }
 
   public Vec3 getDirection() {

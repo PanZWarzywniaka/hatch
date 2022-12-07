@@ -83,7 +83,7 @@ public abstract class Light {
   }
 
   public void render(GL3 gl, Mat4 modelMatrix) {
-    System.out.println("Light model matrix\n" + modelMatrix.toString());
+    // System.out.println("Light model matrix\n" + modelMatrix.toString());
 
     updatePosition(modelMatrix);
 
