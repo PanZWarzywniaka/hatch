@@ -1,3 +1,6 @@
+/* I declare that this code is my own work */
+/* Author Aleksander Marcin Osikowicz amosikowicz1@sheffield.ac.uk */
+
 import gmaths.*;
 
 import java.nio.*;
@@ -48,6 +51,7 @@ public class Room {
   private void loadTextures(GL3 gl) {
     floor_tex = TextureLibrary.loadTexture(gl, "textures/floor.jpg");
     wall_tex = TextureLibrary.loadTexture(gl, "textures/brick.jpeg");
+    // window_tex = TextureLibrary.loadTexture(gl, "textures/papaj.jpeg");
     window_tex = TextureLibrary.loadTexture(gl, "textures/glass.jpg");
     window_spec_tex = TextureLibrary.loadTexture(gl, "textures/glass_specular.jpg");
     skybox_tex = TextureLibrary.loadTexture(gl, "textures/cloud2.jpg");

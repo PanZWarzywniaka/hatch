@@ -1,3 +1,6 @@
+/* I declare that this code is my own work */
+/* Author Aleksander Marcin Osikowicz amosikowicz1@sheffield.ac.uk */
+/* Addapted from Joey de Vries tutorial https://learnopengl.com/ */
 #version 330 core
 
 uniform vec3 aColor;

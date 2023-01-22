@@ -1,3 +1,6 @@
+/* I declare that this code is my own work */
+/* Author Aleksander Marcin Osikowicz amosikowicz1@sheffield.ac.uk */
+
 import com.jogamp.opengl.*;
 
 public class LightNode extends SGNode {

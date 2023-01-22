@@ -1,3 +1,7 @@
+/* I declare that this code is my own work */
+/* Author Aleksander Marcin Osikowicz amosikowicz1@sheffield.ac.uk */
+/* Addapted from Dr Steve Maddock  lab merials s.maddock@sheffield.ac.uk */
+
 import gmaths.*;
 
 import java.nio.*;
@@ -111,6 +115,10 @@ public class HatchGLEventListener implements GLEventListener {
 
   public void rightLampPosition3() {
     scene.rightLampPosition3();
+  }
+
+  public void toggleAnimation() {
+    scene.toggleAnimation();
   }
 
 }

@@ -1,3 +1,7 @@
+
+/* I declare that this code is my own work */
+/* Author Aleksander Marcin Osikowicz amosikowicz1@sheffield.ac.uk */
+/* Addapted from Dr Steve Maddock  lab merials s.maddock@sheffield.ac.uk */
 import gmaths.*;
 import java.nio.*;
 import java.util.Arrays;
@@ -87,13 +91,13 @@ public abstract class Light {
 
     updatePosition(modelMatrix);
 
-    if (!on) {
-      return;
-    }
     Mat4 mvpMatrix = Mat4.multiply(camera.getPerspectiveMatrix(), Mat4.multiply(camera.getViewMatrix(), modelMatrix));
     shader.use(gl);
     shader.setFloatArray(gl, "mvpMatrix", mvpMatrix.toFloatArrayForGLSL());
     shader.setVec3(gl, "aColor", material.getAmbient());
+    if (!on) {
+      shader.setVec3(gl, "aColor", new Vec3(0.2f));
+    }
 
     gl.glBindVertexArray(vertexArrayId[0]);
 

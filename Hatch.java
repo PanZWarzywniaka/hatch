@@ -1,3 +1,7 @@
+
+/* I declare that this code is my own work */
+/* Author Aleksander Marcin Osikowicz amosikowicz1@sheffield.ac.uk */
+/* Addapted from Dr Steve Maddock  lab merials s.maddock@sheffield.ac.uk */
 import java.awt.*;
 import java.awt.event.*;
 
@@ -130,6 +134,8 @@ public class Hatch extends JFrame implements ActionListener {
       glEventListener.rightLampPosition2();
     } else if (e.getActionCommand().equalsIgnoreCase("Right Lamp Position 3")) {
       glEventListener.rightLampPosition3();
+    } else if (e.getActionCommand().equalsIgnoreCase("Toggle animation")) {
+      glEventListener.toggleAnimation();
     }
 
   }
